@@ -24,14 +24,16 @@ class NewsAPI(NewsSource):
         logger.debug(f"Fetching articles from NewsAPI for query: {query}")
 
         params = {
-            "q" : query,
-            "apiKey"  :  self.api_key,
+            "q": query,
+            "apiKey": self.api_key,
             "pageSize": settings.max_articles,
-            "language" : "es"
+            "language": "es",
         }
         try:
             logger.debug("Making request to NewsAPI")
-            response = requests.get(self.BASE_URL, params=params, timeout=settings.request_timeout)
+            response = requests.get(
+                self.BASE_URL, params=params, timeout=settings.request_timeout
+            )
             response.raise_for_status()
             data = response.json()
             articles = [
@@ -40,7 +42,7 @@ class NewsAPI(NewsSource):
                     description=article.get("description", ""),
                     url=article.get("url", ""),
                 )
-            for article in data.get("articles", [])
+                for article in data.get("articles", [])
             ]
             logger.info(f"Retrieved {len(articles)} articles from NewsAPI")
             return articles

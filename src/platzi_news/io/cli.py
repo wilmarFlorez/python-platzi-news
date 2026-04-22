@@ -17,7 +17,9 @@ def print_help() -> None:
     print("  search <query> --source <source>    Search articles")
     print("  ask <query> <question> --source <source>    Ask about news")
     print("Options:")
-    print("  --log-level <level>    Set log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) and this is a very long line that exceeds the recommended line length for code formatting and readability purposes in Python")
+    print(
+        "  --log-level <level>    Set log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) and this is a very long line that exceeds the recommended line length for code formatting and readability purposes in Python"
+    )
 
 
 def parse_args() -> SimpleNamespace:
@@ -31,7 +33,7 @@ def parse_args() -> SimpleNamespace:
         if idx + 1 < len(sys.argv):
             log_level = sys.argv[idx + 1]
             # Remove them from sys.argv
-            del sys.argv[idx:idx+2]
+            del sys.argv[idx : idx + 2]
         else:
             print("Error: --log-level requires a value")
             sys.exit(1)
@@ -48,7 +50,9 @@ def parse_args() -> SimpleNamespace:
             sys.exit(1)
         query = sys.argv[2]
         source = sys.argv[4]
-        return SimpleNamespace(command=command, query=query, source=source, log_level=log_level)
+        return SimpleNamespace(
+            command=command, query=query, source=source, log_level=log_level
+        )
     elif command == "ask":
         if len(sys.argv) != 6 or sys.argv[4] != "--source":
             print("Usage: platzi-news ask <query> <question> --source <source>")
@@ -56,16 +60,16 @@ def parse_args() -> SimpleNamespace:
         query = sys.argv[2]
         question = sys.argv[3]
         source = sys.argv[5]
-        return SimpleNamespace(command=command, query=query, question=question, source=source, log_level=log_level)
+        return SimpleNamespace(
+            command=command,
+            query=query,
+            question=question,
+            source=source,
+            log_level=log_level,
+        )
     else:
         print_help()
         sys.exit(1)
-
-
-
-
-
-
 
 
 def main() -> NoReturn:
@@ -88,7 +92,9 @@ def main() -> NoReturn:
             logger.info(f"Found {len(articles)} articles")
             display_articles(articles)
         elif args.command == "ask":
-            logger.info(f"Asking '{args.question}' about '{args.query}' from {args.source}")
+            logger.info(
+                f"Asking '{args.question}' about '{args.query}' from {args.source}"
+            )
             articles = service.search_articles(args.source, args.query)
             logger.info(f"Retrieved {len(articles)} articles for analysis")
             answer = service.analyze_articles(articles, args.question)

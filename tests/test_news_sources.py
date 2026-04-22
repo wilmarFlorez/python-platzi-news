@@ -83,8 +83,6 @@ class TestNewsAPI(unittest.TestCase):
             self.api.fetch_articles("test query")
 
 
-
-
 class TestNewsService(unittest.TestCase):
     """Test NewsService."""
 

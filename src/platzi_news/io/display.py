@@ -22,7 +22,9 @@ def display_articles(articles: List[Article]) -> None:
     for i, article in enumerate(articles, 1):
         console.print(f"[bold cyan]Artículo {i}:[/bold cyan]")
         console.print(f"[bold]Título:[/bold] {article.title}")
-        console.print(f"[bold]Descripción:[/bold] {article.description or 'Sin descripción'}")
+        console.print(
+            f"[bold]Descripción:[/bold] {article.description or 'Sin descripción'}"
+        )
         console.print(f"[bold]URL:[/bold] {article.url}")
         console.print("─" * 50)
         console.print()

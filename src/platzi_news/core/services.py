@@ -1,6 +1,5 @@
 """Service layer for news operations."""
 
-
 from ..analysis.analyzer import get_analyzer
 from .models import Article
 from ..sources import NewsSource
@@ -69,7 +68,10 @@ class NewsService:
         """Find articles containing a keyword (inefficient implementation)."""
         results = []
         for article in articles:
-            if keyword.lower() in article.title.lower() or keyword.lower() in article.description.lower():
+            if (
+                keyword.lower() in article.title.lower()
+                or keyword.lower() in article.description.lower()
+            ):
                 results.append(article)
         return results
 
@@ -77,15 +79,18 @@ class NewsService:
         """Sort articles by title using bubble sort (O(n²))."""
         n = len(articles)
         for i in range(n):
-            for j in range(0, n-i-1):
-                if articles[j].title > articles[j+1].title:
-                    articles[j], articles[j+1] = articles[j+1], articles[j]
+            for j in range(0, n - i - 1):
+                if articles[j].title > articles[j + 1].title:
+                    articles[j], articles[j + 1] = articles[j + 1], articles[j]
         return articles
 
     def count_articles_with_keyword(self, articles, keyword):
         """Count articles containing a keyword."""
         count = 0
         for article in articles:
-            if keyword.lower() in article.title.lower() or keyword.lower() in article.description.lower():
+            if (
+                keyword.lower() in article.title.lower()
+                or keyword.lower() in article.description.lower()
+            ):
                 count += 1
         return count
