@@ -19,3 +19,8 @@ dependencies = [
 [project.scripts]
 platzi-news = "platzi_news.main:main"
 
+[dependency-groups]
+dev = [
+    "ruff>=0.15.11",
+]
+
