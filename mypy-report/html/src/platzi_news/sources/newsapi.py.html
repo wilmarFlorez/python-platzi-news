@@ -78,29 +78,34 @@
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">    BASE_URL = "https://newsapi.org/v2/everything"</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">    def __init__(self) -&gt; None:</span>
-<span class="line-precise" title="No Anys on this line!">        self.api_key = settings.newsapi_api_key</span>
+<span class="line-any" title="No Anys on this line!">    def __init__(self):</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">        self.api_key = settings.newsapi_api_key</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">    def fetch_articles(self, query: str) -&gt; list[Article]:</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">    def fetch_articles(self, query: str):</span>
 <span class="line-empty" title="No Anys on this line!">        """Fetch articles from NewsAPI."""</span>
 <span class="line-precise" title="No Anys on this line!">        logger = logging.getLogger(__name__)</span>
 <span class="line-precise" title="No Anys on this line!">        logger.debug(f"Fetching articles from NewsAPI for query: {query}")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">        params: dict[str, int | str] = {</span>
+<span class="line-imprecise" title="Any Types on this line: 
+Unannotated (x1)">        params = {</span>
 <span class="line-precise" title="No Anys on this line!">            "q": query,</span>
-<span class="line-precise" title="No Anys on this line!">            "apiKey": self.api_key,</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">            "apiKey": self.api_key,</span>
 <span class="line-precise" title="No Anys on this line!">            "pageSize": settings.max_articles,</span>
 <span class="line-precise" title="No Anys on this line!">            "language": "es",</span>
 <span class="line-empty" title="No Anys on this line!">        }</span>
 <span class="line-empty" title="No Anys on this line!">        try:</span>
 <span class="line-precise" title="No Anys on this line!">            logger.debug("Making request to NewsAPI")</span>
 <span class="line-precise" title="No Anys on this line!">            response = requests.get(</span>
-<span class="line-precise" title="No Anys on this line!">                self.BASE_URL, params=params, timeout=settings.request_timeout</span>
+<span class="line-imprecise" title="Any Types on this line: 
+Unannotated (x1)">                self.BASE_URL, params=params, timeout=settings.request_timeout</span>
 <span class="line-empty" title="No Anys on this line!">            )</span>
 <span class="line-precise" title="No Anys on this line!">            response.raise_for_status()</span>
 <span class="line-any" title="Any Types on this line: 
 Explicit (x13)">            data = response.json()</span>
-<span class="line-precise" title="No Anys on this line!">            articles: list[Article] = [</span>
+<span class="line-precise" title="No Anys on this line!">            articles = [</span>
 <span class="line-precise" title="No Anys on this line!">                Article(</span>
 <span class="line-any" title="Any Types on this line: 
 Explicit (x3)">                    title=article.get("title", ""),</span>

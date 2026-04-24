@@ -104,16 +104,14 @@
 <span id="L94" class="lineno"><a class="lineno" href="#L94">94</a></span>
 <span id="L95" class="lineno"><a class="lineno" href="#L95">95</a></span>
 <span id="L96" class="lineno"><a class="lineno" href="#L96">96</a></span>
-<span id="L97" class="lineno"><a class="lineno" href="#L97">97</a></span>
-<span id="L98" class="lineno"><a class="lineno" href="#L98">98</a></span>
 </pre></td>
 <td class="table-code"><pre><span class="line-empty" title="No Anys on this line!">"""Service layer for news operations."""</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from ..analysis.analyzer import OpenAIAnalyzer, get_analyzer</span>
+<span class="line-precise" title="No Anys on this line!">from ..analysis.analyzer import get_analyzer</span>
+<span class="line-precise" title="No Anys on this line!">from .models import Article</span>
 <span class="line-precise" title="No Anys on this line!">from ..sources import NewsSource</span>
 <span class="line-precise" title="No Anys on this line!">from ..sources.guardian import GuardianAPI</span>
 <span class="line-precise" title="No Anys on this line!">from ..sources.newsapi import NewsAPI</span>
-<span class="line-precise" title="No Anys on this line!">from .models import Article</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class NewsService:</span>
@@ -126,13 +124,13 @@
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">    def __init__(self) -&gt; None:</span>
 <span class="line-empty" title="No Anys on this line!">        """Initialize the news service with available sources and analyzer."""</span>
-<span class="line-precise" title="No Anys on this line!">        self.sources: dict[str, NewsSource] = {</span>
+<span class="line-precise" title="No Anys on this line!">        self.sources = {</span>
 <span class="line-precise" title="No Anys on this line!">            "guardian": GuardianAPI(),</span>
 <span class="line-precise" title="No Anys on this line!">            "newsapi": NewsAPI(),</span>
 <span class="line-empty" title="No Anys on this line!">        }</span>
-<span class="line-precise" title="No Anys on this line!">        self.analyzer: OpenAIAnalyzer = get_analyzer()</span>
+<span class="line-precise" title="No Anys on this line!">        self.analyzer = get_analyzer()</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">    def get_source(self, source_name: str) -&gt; NewsSource:</span>
+<span class="line-any" title="No Anys on this line!">    def get_source(self, source_name):</span>
 <span class="line-empty" title="No Anys on this line!">        """Get a news source by name.</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!">        Args:</span>
@@ -144,11 +142,14 @@
 <span class="line-empty" title="No Anys on this line!">        Raises:</span>
 <span class="line-empty" title="No Anys on this line!">            ValueError: If the source name is unknown.</span>
 <span class="line-empty" title="No Anys on this line!">        """</span>
-<span class="line-precise" title="No Anys on this line!">        if source_name not in self.sources:</span>
-<span class="line-precise" title="No Anys on this line!">            raise ValueError(f"Unknown source: {source_name}")</span>
-<span class="line-precise" title="No Anys on this line!">        return self.sources[source_name]</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">        if source_name not in self.sources:</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x6)">            raise ValueError(f"Unknown source: {source_name}")</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)">        return self.sources[source_name]</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">    def search_articles(self, source_name: str, query: str) -&gt; list[Article]:</span>
+<span class="line-any" title="No Anys on this line!">    def search_articles(self, source_name, query):</span>
 <span class="line-empty" title="No Anys on this line!">        """Search for articles from a specific source.</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!">        Args:</span>
@@ -158,8 +159,10 @@
 <span class="line-empty" title="No Anys on this line!">        Returns:</span>
 <span class="line-empty" title="No Anys on this line!">            A list of Article objects matching the query.</span>
 <span class="line-empty" title="No Anys on this line!">        """</span>
-<span class="line-precise" title="No Anys on this line!">        source = self.get_source(source_name)</span>
-<span class="line-precise" title="No Anys on this line!">        return source.fetch_articles(query)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)">        source = self.get_source(source_name)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)">        return source.fetch_articles(query)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">    def analyze_articles(self, articles: list[Article], question: str) -&gt; str:</span>
 <span class="line-empty" title="No Anys on this line!">        """Analyze articles and answer a question.</span>
@@ -173,38 +176,54 @@
 <span class="line-empty" title="No Anys on this line!">        """</span>
 <span class="line-precise" title="No Anys on this line!">        return self.analyzer.analyze(articles, question)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">    def find_articles_by_keyword(</span>
-<span class="line-empty" title="No Anys on this line!">        self, articles: list[Article], keyword: str</span>
-<span class="line-empty" title="No Anys on this line!">    ) -&gt; list[Article]:</span>
+<span class="line-any" title="No Anys on this line!">    def find_articles_by_keyword(self, articles, keyword):</span>
 <span class="line-empty" title="No Anys on this line!">        """Find articles containing a keyword (inefficient implementation)."""</span>
-<span class="line-precise" title="No Anys on this line!">        results = []</span>
-<span class="line-precise" title="No Anys on this line!">        for article in articles:</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">        results = []</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">        for article in articles:</span>
 <span class="line-empty" title="No Anys on this line!">            if (</span>
-<span class="line-precise" title="No Anys on this line!">                keyword.lower() in article.title.lower()</span>
-<span class="line-precise" title="No Anys on this line!">                or keyword.lower() in article.description.lower()</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x8)">                keyword.lower() in article.title.lower()</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x7)">                or keyword.lower() in article.description.lower()</span>
 <span class="line-empty" title="No Anys on this line!">            ):</span>
-<span class="line-precise" title="No Anys on this line!">                results.append(article)</span>
-<span class="line-precise" title="No Anys on this line!">        return results</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)">                results.append(article)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">        return results</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">    def sort_articles_by_title(self, articles: list[Article]) -&gt; list[Article]:</span>
+<span class="line-any" title="No Anys on this line!">    def sort_articles_by_title(self, articles):</span>
 <span class="line-empty" title="No Anys on this line!">        """Sort articles by title using bubble sort (O(n²))."""</span>
-<span class="line-precise" title="No Anys on this line!">        n = len(articles)</span>
-<span class="line-precise" title="No Anys on this line!">        for i in range(n):</span>
-<span class="line-precise" title="No Anys on this line!">            for j in range(0, n - i - 1):</span>
-<span class="line-precise" title="No Anys on this line!">                if articles[j].title &gt; articles[j + 1].title:</span>
-<span class="line-precise" title="No Anys on this line!">                    articles[j], articles[j + 1] = articles[j + 1], articles[j]</span>
-<span class="line-precise" title="No Anys on this line!">        return articles</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)">        n = len(articles)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)">        for i in range(n):</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x6)">            for j in range(0, n - i - 1):</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x10)">                if articles[j].title &gt; articles[j + 1].title:</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x12)">                    articles[j], articles[j + 1] = articles[j + 1], articles[j]</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">        return articles</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">    def count_articles_with_keyword(self, articles: list[Article], keyword: str) -&gt; int:</span>
+<span class="line-any" title="No Anys on this line!">    def count_articles_with_keyword(self, articles, keyword):</span>
 <span class="line-empty" title="No Anys on this line!">        """Count articles containing a keyword."""</span>
-<span class="line-precise" title="No Anys on this line!">        count = 0</span>
-<span class="line-precise" title="No Anys on this line!">        for article in articles:</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">        count = 0</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">        for article in articles:</span>
 <span class="line-empty" title="No Anys on this line!">            if (</span>
-<span class="line-precise" title="No Anys on this line!">                keyword.lower() in article.title.lower()</span>
-<span class="line-precise" title="No Anys on this line!">                or keyword.lower() in article.description.lower()</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x8)">                keyword.lower() in article.title.lower()</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x7)">                or keyword.lower() in article.description.lower()</span>
 <span class="line-empty" title="No Anys on this line!">            ):</span>
-<span class="line-precise" title="No Anys on this line!">                count += 1</span>
-<span class="line-precise" title="No Anys on this line!">        return count</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">                count += 1</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">        return count</span>
 </pre></td>
 </tr></tbody>
 </table>

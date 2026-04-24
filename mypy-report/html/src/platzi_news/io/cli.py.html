@@ -218,9 +218,12 @@ Explicit (x2)">        if args.command == "search":</span>
 <span class="line-any" title="Any Types on this line: 
 Explicit (x2)">            logger.info(f"Searching for '{args.query}' in {args.source}")</span>
 <span class="line-any" title="Any Types on this line: 
+Unannotated (x5)
 Explicit (x2)">            articles = service.search_articles(args.source, args.query)</span>
-<span class="line-precise" title="No Anys on this line!">            logger.info(f"Found {len(articles)} articles")</span>
-<span class="line-precise" title="No Anys on this line!">            display_articles(articles)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">            logger.info(f"Found {len(articles)} articles")</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">            display_articles(articles)</span>
 <span class="line-any" title="Any Types on this line: 
 Explicit (x2)">        elif args.command == "ask":</span>
 <span class="line-precise" title="No Anys on this line!">            logger.info(</span>
@@ -228,9 +231,12 @@ Explicit (x2)">        elif args.command == "ask":</span>
 Explicit (x3)">                f"Asking '{args.question}' about '{args.query}' from {args.source}"</span>
 <span class="line-empty" title="No Anys on this line!">            )</span>
 <span class="line-any" title="Any Types on this line: 
+Unannotated (x5)
 Explicit (x2)">            articles = service.search_articles(args.source, args.query)</span>
-<span class="line-precise" title="No Anys on this line!">            logger.info(f"Retrieved {len(articles)} articles for analysis")</span>
 <span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">            logger.info(f"Retrieved {len(articles)} articles for analysis")</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
 Explicit (x1)">            answer = service.analyze_articles(articles, args.question)</span>
 <span class="line-precise" title="No Anys on this line!">            logger.info("Analysis completed successfully")</span>
 <span class="line-precise" title="No Anys on this line!">            display_answer(answer)</span>
