@@ -23,6 +23,7 @@ platzi-news = "platzi_news.main:main"
 dev = [
     "lxml>=6.1.0",
     "mypy>=1.20.2",
+    "pre-commit>=4.6.0",
     "ruff>=0.15.11",
     "types-requests>=2.33.0.20260408",
 ]
@@ -42,4 +43,3 @@ select = [
     # isort
     "I",
 ]
-
