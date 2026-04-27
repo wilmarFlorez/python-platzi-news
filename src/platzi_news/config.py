@@ -1,5 +1,6 @@
 """Configuration management for Platzi News."""
 
+import sentry_sdk
 from pydantic import Field, ValidationError
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -31,18 +32,27 @@ class Settings(BaseSettings):
 
 # Global settings instance with validation
 try:
-    settings = Settings() # type: ignore[call-arg]
+    settings = Settings()  # type: ignore[call-arg]
 except ValidationError as e:
     missing_keys = [
         str(err["loc"][0]) for err in e.errors() if err["type"] == "missing"
     ]
     if missing_keys:
         msg = (
-            f"""Las siguientes claves de API no están configuradas: 
-            {', '.join(missing_keys)}. """
+            f"""Las siguientes claves de API no están configuradas:
+            {", ".join(missing_keys)}. """
             """Por favor, configure las variables de entorno
               en un archivo .env o en su sistema."""
         )
         raise ConfigError(msg) from e
     else:
         raise ConfigError(f"Error de configuración: {e}") from e
+
+
+sentry_sdk.init(
+    dsn="https://f55a8e30a36d30dd56a70d809d7c5906@o4511281735729152.ingest.us.sentry.io/4511281744642048",
+    # Add data like request headers and IP for users,
+    # For more info see
+    # https://docs.sentry.io/platforms/python/data-management/data-collected/
+    send_default_pii=True,
+)

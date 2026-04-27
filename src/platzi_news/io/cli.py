@@ -17,9 +17,9 @@ def print_help() -> None:
     print("  ask <query> <question> --source <source>    Ask about news")
     print("Options:")
     print(
-        """  --log-level <level>    
-        Set log level (DEBUG, INFO, WARNING, ERROR, CRITICAL) 
-        and this is a very long line that exceeds the recommended line length for code 
+        """  --log-level <level>
+        Set log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+        and this is a very long line that exceeds the recommended line length for code
         formatting and readability purposes in Python"""
     )
 
@@ -73,7 +73,7 @@ def parse_args() -> SimpleNamespace:
         sys.exit(1)
 
 
-def main() -> NoReturn:
+async def main() -> NoReturn:
     """Main entry point for the CLI application."""
     args = parse_args()
 
@@ -89,14 +89,14 @@ def main() -> NoReturn:
         service = NewsService()
         if args.command == "search":
             logger.info(f"Searching for '{args.query}' in {args.source}")
-            articles = service.search_articles(args.source, args.query)
+            articles = await service.asearch_articles(args.source, args.query)
             logger.info(f"Found {len(articles)} articles")
             display_articles(articles)
         elif args.command == "ask":
             logger.info(
                 f"Asking '{args.question}' about '{args.query}' from {args.source}"
             )
-            articles = service.search_articles(args.source, args.query)
+            articles = await service.asearch_articles(args.source, args.query)
             logger.info(f"Retrieved {len(articles)} articles for analysis")
             answer = service.analyze_articles(articles, args.question)
             logger.info("Analysis completed successfully")
