@@ -19,7 +19,7 @@ repos:
       entry: mypy
       language: system
       types: [python]
-      args: [--config-file, pyproject.toml]
+      args: [--config-file, pyproject.toml, src]
       pass_filenames: false
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
